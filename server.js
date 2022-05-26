@@ -1,9 +1,12 @@
 //route that the front-end can request data from.
 const {animals}= require('./data/animals.json')
 
+//sets the port 
+const PORT =process.env.PORT || 3001;
+
 // importation Require packages and modules for the app
 const express = require('express')
-// nstantiate of the server
+// nstantiate of the serveru7`
 const app = express()
 
 // function to filter the data 
@@ -71,6 +74,6 @@ app.get('/api/animals', (req, res) => {
   });
 
 //use the app var to listen for request on the a certain port
-app.listen(3001,()=>{
-    console.log('API serer now on port 3001!')
+app.listen(PORT,()=>{
+    console.log(`API serer now on port ${PORT}!`)
 })
