@@ -4,11 +4,17 @@ const {animals}= require('./data/animals.json')
 //sets the port 
 const PORT =process.env.PORT || 3001;
 
+
+
 // importation Require packages and modules for the app
 const express = require('express')
 // nstantiate of the serveru7`
 const app = express()
 
+function findById(id, animalsArray) {
+  const results  = animalsArray.filter(animal => animal.id=== id)[0]
+  return results
+}
 // function to filter the data 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -54,24 +60,33 @@ function filterByQuery(query, animalsArray) {
 
 app.get('/api/animals', (req, res) => {
 
-    console.log("console log of the req.query " + req.query)
+
     //var needed to store requested data in the  request  pull
     let getPullResults = animals
 
-    console.log("console log of the get pull request  " + req.query)
     // res.send('Hello!');  this send a message to back when data is requested 
 
     if(req.query){
 
         // results of the fitler data
         results = filterByQuery(req.query,getPullResults);
-        console.log("console log of the results after the filter by query  " + req.query)
+      
     }
 
-    res.json(results)
-    console.log("console log of the res.json " + results)
+   res.json(results)
+   console.log(results)
    
   });
+
+  app.get('/api/animals/:id',(req,res)=>{
+    const result = findById(req.params.id, animals)
+    if(result){
+      res.json(result)
+  }else{
+    res.send(404)
+  }})
+
+  
 
 //use the app var to listen for request on the a certain port
 app.listen(PORT,()=>{
