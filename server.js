@@ -7,10 +7,18 @@ const PORT =process.env.PORT || 3001;
 
 
 // importation Require packages and modules for the app
-const express = require('express')
-// nstantiate of the serveru7`
-const app = express()
+const express = require('express');
+const req = require('express/lib/request');
+// instantiate of the server
+const app = express();
 
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
+
+
+// this function uses the id to find animals by id in the array 
 function findById(id, animalsArray) {
   const results  = animalsArray.filter(animal => animal.id=== id)[0]
   return results
@@ -57,34 +65,41 @@ function filterByQuery(query, animalsArray) {
      return filteredResults
 
 }
-
+//filter using the filterbyquery function
 app.get('/api/animals', (req, res) => {
 
 
     //var needed to store requested data in the  request  pull
     let getPullResults = animals
-
     // res.send('Hello!');  this send a message to back when data is requested 
-
     if(req.query){
-
         // results of the fitler data
-        results = filterByQuery(req.query,getPullResults);
-      
+        results = filterByQuery(req.query,getPullResults);      
     }
-
+    //sends a response as a json file to the client
    res.json(results)
+    // console.logs the results of the  
    console.log(results)
    
   });
 
-  app.get('/api/animals/:id',(req,res)=>{
+
+//filter by id 
+app.get('/api/animals/:id',(req,res)=>{
     const result = findById(req.params.id, animals)
     if(result){
       res.json(result)
   }else{
     res.send(404)
   }})
+
+
+app.post('/api/animals', (req, res) => {
+  // req.body is where our incoming content will be
+  console.log(req.body);
+  res.json(req.body);
+});
+
 
   
 
