@@ -21,6 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
 
+app.use(express.static('public'))
+
 
 // this function uses the id to find animals by id in the array 
 function findById(id, animalsArray) {
@@ -151,7 +153,10 @@ app.post('/api/animals', (req, res) => {
  //test
  
 });
-
+// this display the request webpage to the browser
+app.get('/',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./public/index.html'))
+})
 
   
 
