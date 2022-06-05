@@ -117,6 +117,16 @@
         "hungry"
       ],
       "id": "11"
+    },
+    {
+      "name": "Cooper",
+      "species": "Dog",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "zany",
+        "anxious"
+      ],
+      "id": "12"
     }
   ]
 }

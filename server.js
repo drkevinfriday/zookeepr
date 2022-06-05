@@ -16,12 +16,21 @@ const req = require('express/lib/request');
 // instantiate of the server
 const app = express();
 
+
+  // ****** New Section: Middleware *****
+
+
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
 
+// makes the files public so all  the files can be read
+
 app.use(express.static('public'))
+
+
+  // ****** New Section: Functions*****
 
 
 // this function uses the id to find animals by id in the array 
@@ -103,6 +112,12 @@ function filterByQuery(query, animalsArray) {
      return filteredResults
 
 }
+
+
+
+  // ****** New Section: Express calls and requests *****
+
+
 //filter using the filterbyquery function
 app.get('/api/animals', (req, res) => {
 
@@ -153,14 +168,32 @@ app.post('/api/animals', (req, res) => {
  //test
  
 });
-// this display the request webpage to the browser
+
+
+
+  // ****** New Section: Html Sendfile responses *****
+
+
+// this display the request webpage to the browser base don address
 app.get('/',(req,res)=>{
   res.sendFile(path.join(__dirname,'./public/index.html'))
 })
+app.get('/animals',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./public/animals.html'))
+})
 
-  
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+    // sends user the index html when roots doent exist 
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./public/index.html'))
+})
+
+
+  // ****** New Section:  Listening port *****
 
 //use the app var to listen for request on the a certain port
 app.listen(PORT,()=>{
-    console.log(`API serer now on port ${PORT}!`)
+    console.log(`API server now on port ${PORT}!`)
 })
